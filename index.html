@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlexandrIA | Anima Mundi - Preserving Humanity's Treasures</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        alexandria: {
+                            gold: '#D4AF37',
+                            bronze: '#CD7F32',
+                            sage: '#87CEEB',
+                            deep: '#1B4B73',
+                            emerald: '#50C878',
+                            crimson: '#DC143C',
+                        },
+                        dark: {
+                            900: '#0a0a0f',
+                            800: '#1a1a2e',
+                            700: '#16213e',
+                        }
+                    },
+                    animation: {
+                        'phoenix-glow': 'phoenix-glow 4s ease-in-out infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                        'treasure-shimmer': 'treasure-shimmer 10s linear infinite',
+                        'anima-pulse': 'anima-pulse 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'phoenix-glow': {
+                            '0%, 100%': { 'box-shadow': '0 0 5px #D4AF37, 0 0 15px #D4AF37, 0 0 25px #D4AF37' },
+                            '50%': { 'box-shadow': '0 0 10px #DC143C, 0 0 25px #DC143C, 0 0 40px #DC143C' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        'treasure-shimmer': {
+                            '0%': { 'background-position': '0% 50%' },
+                            '100%': { 'background-position': '200% 50%' },
+                        },
+                        'anima-pulse': {
+                            '0%': { opacity: '0.8', transform: 'scale(1)' },
+                            '50%': { opacity: '1', transform: 'scale(1.05)' },
+                            '100%': { opacity: '0.8', transform: 'scale(1)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .treasure-border {
+            position: relative;
+            z-index: 1;
+        }
+
+        .treasure-border::before {
+            content: '';
+            position: absolute;
+            inset-block-start: -2px;
+            inset-inline-start: -2px;
+            inset-inline-end: -2px;
+            inset-block-end: -2px;
+            background: linear-gradient(45deg,
+                #D4AF37, #50C878, #87CEEB, #DC143C, #CD7F32, #D4AF37);
+            background-size: 400% 400%;
+            z-index: -1;
+            border-radius: inherit;
+            animation: treasure-shimmer 10s linear infinite;
+            opacity: 0.8;
+        }
+
+        .treasure-border::after {
+            content: '';
+            position: absolute;
+            inset-block-start: 0;
+            inset-inline-start: 0;
+            inset-inline-end: 0;
+            inset-block-end: 0;
+            background: inherit;
+            border-radius: inherit;
+            z-index: -1;
+        }
+
+        .phoenix-glow {
+            text-shadow: 0 0 5px #D4AF37, 0 0 10px #D4AF37, 0 0 15px #D4AF37;
+        }
+
+        .alexandria-shadow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4),
+                        0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .anima-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #D4AF37, #50C878);
+            animation: anima-pulse 3s ease-in-out infinite;
+        }
+
+        .blockchain-grid {
+            background: 
+                linear-gradient(90deg, rgba(212, 175, 55, 0.1) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(212, 175, 55, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+        }
+
+        .nft-card {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .polkadot-accent {
+            background: linear-gradient(135deg, #E6007A, #552BBF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="relative">
+    <div class="blockchain-grid fixed inset-0 pointer-events-none z-0"></div>
+    
+    <!-- Anima Mundi Particles -->
+    <div class="fixed inset-0 pointer-events-none z-10" id="anima-particles"></div>
+
+    <!-- Navigation -->
+    <nav class="relative z-50 py-6 px-6 md:px-12 flex justify-between items-center">
+        <div class="text-2xl font-bold phoenix-glow text-alexandria-gold">
+            <span class="treasure-border px-4 py-2 rounded-lg">
+                <i class="fas fa-phoenix-framework mr-2"></i>AlexandrIA
+            </span>
+        </div>
+        <div class="hidden md:flex space-x-8">
+            <a href="#mission" class="text-alexandria-sage hover:text-alexandria-gold transition duration-300 phoenix-glow">Mission</a>
+            <a href="#treasures" class="text-alexandria-emerald hover:text-alexandria-gold transition duration-300 phoenix-glow">Treasures</a>
+            <a href="#blockchain" class="text-alexandria-bronze hover:text-alexandria-gold transition duration-300 phoenix-glow">Blockchain</a>
+            <a href="#network" class="text-alexandria-deep hover:text-alexandria-gold transition duration-300 phoenix-glow">Network</a>
+            <a href="#contact" class="text-white hover:text-alexandria-gold transition duration-300 phoenix-glow">Contact</a>
+        </div>
+        <button class="md:hidden text-alexandria-gold">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative z-40 py-20 px-6 md:px-12 text-center">
+        <div class="max-w-6xl mx-auto">
+            <div class="inline-block mb-6">
+                <span class="text-sm uppercase tracking-widest px-6 py-3 rounded-full bg-dark-800 text-alexandria-gold phoenix-glow border border-alexandria-gold">
+                    <i class="fas fa-globe mr-2"></i>Anima Mundi Protocol
+                </span>
+            </div>
+            <h1 class="text-4xl md:text-7xl font-bold mb-6 phoenix-glow text-alexandria-gold">
+                Preserving Humanity's
+                <span class="text-alexandria-emerald">Treasures</span>
+                <br>for <span class="text-alexandria-crimson">Perpetuity</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 text-gray-300 max-w-4xl mx-auto">
+                AlexandrIA Anima Mundi creates eternal NFTs from Earth's treasures, using advanced blockchain technology 
+                to authenticate and preserve humanity's most precious artifacts for future generations.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="#treasures" class="px-8 py-4 rounded-lg bg-alexandria-gold text-dark-900 font-bold hover:bg-alexandria-bronze transition duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-gem mr-2"></i>Explore Treasures
+                </a>
+                <a href="#blockchain" class="px-8 py-4 rounded-lg border-2 border-alexandria-sage text-alexandria-sage font-bold hover:bg-alexandria-sage hover:text-dark-900 transition duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fab fa-ethereum mr-2"></i>View on Blockchain
+                </a>
+                <a href="#contact" class="px-8 py-4 rounded-lg border-2 border-alexandria-emerald text-alexandria-emerald font-bold hover:bg-alexandria-emerald hover:text-dark-900 transition duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-envelope mr-2"></i>Get in Touch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="mission" class="relative z-40 py-20 px-6 md:px-12 bg-dark-800">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center phoenix-glow text-alexandria-gold">
+                <span class="treasure-border px-4 py-2 rounded-lg">The Phoenix Protocol</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="nft-card p-8 rounded-xl alexandria-shadow">
+                    <i class="fas fa-infinity text-4xl text-alexandria-emerald mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-4 text-alexandria-gold">Perpetual Preservation</h3>
+                    <p class="text-gray-300">
+                        Ensuring Earth's treasures survive forever through immutable blockchain technology 
+                        and decentralized storage networks.
+                    </p>
+                </div>
+                <div class="nft-card p-8 rounded-xl alexandria-shadow">
+                    <i class="fas fa-shield-alt text-4xl text-alexandria-sage mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-4 text-alexandria-gold">Authentication & Security</h3>
+                    <p class="text-gray-300">
+                        Advanced cryptographic verification ensures each treasure's authenticity 
+                        and protects against forgery through blockchain immutability.
+                    </p>
+                </div>
+                <div class="nft-card p-8 rounded-xl alexandria-shadow">
+                    <i class="fas fa-network-wired text-4xl text-alexandria-bronze mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-4 text-alexandria-gold">Unified Network</h3>
+                    <p class="text-gray-300">
+                        Integrated with Polkadot ecosystem, supporting 500+ wallets and social login 
+                        through our DWallStreet module.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treasures Section -->
+    <section id="treasures" class="relative z-40 py-20 px-6 md:px-12">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center phoenix-glow text-alexandria-sage">
+                <span class="treasure-border px-4 py-2 rounded-lg">Digital Treasures</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Treasure NFT Cards -->
+                <div class="nft-card rounded-xl overflow-hidden alexandria-shadow hover:transform hover:scale-105 transition duration-500">
+                    <div class="h-48 bg-gradient-to-r from-alexandria-gold to-alexandria-bronze flex items-center justify-center">
+                        <i class="fas fa-crown text-6xl text-dark-900"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-alexandria-emerald">Ancient Artifacts</h3>
+                        <p class="text-gray-300 mb-4">Historical treasures digitally preserved with complete provenance and authentication.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-2 py-1 rounded bg-dark-900 text-alexandria-gold">Authenticated</span>
+                            <span class="text-xs px-2 py-1 rounded bg-dark-900 text-alexandria-sage">Polkadot</span>
+                            <span class="text-xs px-2 py-1 rounded bg-dark-900 text-alexandria-emerald">NFT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nft-card rounded-xl overflow-hidden alexandria-shadow hover:transform hover:scale-105 transition duration-500">
+                    <div class="h-48 bg-gradient-to-r from-alexandria-sage to-alexandria-emerald flex items-center justify-center">
+                        <i class="fas fa-leaf text-6xl text-dark-900"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-alexandria-sage">Natural Wonders</h3>
+                        <p class="text-gray-300 mb-4">Earth's most beautiful locations and specimens preserved for future generations.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-2 py-1 rounded bg-dark-900 text-alexandria-emerald">Verified</span>
+                            <span class="text-xs px-2 py-1 rounded bg-dark-900 text-alexandria-bronze">Rust</span>
+                            <span class="text-xs px-2 py-1 rounded bg-dark-900 text-alexandria-gold">Treasure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nft-card rounded-xl overflow-hidden alexandria-shadow hover:transform hover:scale-105 transition duration-500">
+                    <div class="h-48 bg-gradient-to-r from-alexandria-deep to-alexandria-crimson flex items-center justify-center">
+                        <i class="fas fa-brain text-6xl text-alexandria-gold"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-alexandria-crimson">Human Knowledge</h3>
+                        <p class="text-gray-300 mb-4">Scientific discoveries, cultural wisdom, and intellectual treasures permanently stored.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-2 py-1 rounded bg-dark-900 text-alexandria-crimson">Immutable</span>
+                            <span class="text-xs px-2 py-1 rounded bg-dark-900 text-alexandria-deep">Thirdweb</span>
+                            <span class="text-xs px-2 py-1 rounded bg-dark-900 text-alexandria-bronze">Smart Contract</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blockchain Technology Section -->
+    <section id="blockchain" class="relative z-40 py-20 px-6 md:px-12 bg-dark-800">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center phoenix-glow text-alexandria-bronze">
+                <span class="treasure-border px-4 py-2 rounded-lg">Blockchain Infrastructure</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-alexandria-gold">
+                        <i class="polkadot-accent fab fa-dot-circle mr-3"></i>Polkadot Integration
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-alexandria-emerald mr-3"></i>
+                            <span>Cross-chain compatibility</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-alexandria-emerald mr-3"></i>
+                            <span>Substrate-based parachains</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-alexandria-emerald mr-3"></i>
+                            <span>Interoperable treasure network</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-alexandria-emerald mr-3"></i>
+                            <span>Rust-powered smart contracts</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-alexandria-sage">
+                        <i class="fas fa-wallet text-alexandria-bronze mr-3"></i>Wallet Ecosystem
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-alexandria-sage mr-3"></i>
+                            <span>500+ wallet compatibility</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-alexandria-sage mr-3"></i>
+                            <span>Social network login</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-alexandria-sage mr-3"></i>
+                            <span>Google authentication</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-alexandria-sage mr-3"></i>
+                            <span>DWallStreet integration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Network Infrastructure Section -->
+    <section id="network" class="relative z-40 py-20 px-6 md:px-12">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center phoenix-glow text-alexandria-emerald">
+                <span class="treasure-border px-4 py-2 rounded-lg">Network Architecture</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="nft-card p-6 rounded-xl alexandria-shadow text-center">
+                    <i class="fas fa-desktop text-4xl text-alexandria-gold mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3 text-alexandria-gold">Guacamole Gateway</h3>
+                    <p class="text-gray-300">Remote desktop access for treasure management and blockchain operations.</p>
+                </div>
+                <div class="nft-card p-6 rounded-xl alexandria-shadow text-center">
+                    <i class="fas fa-server text-4xl text-alexandria-sage mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3 text-alexandria-sage">Tomcat Services</h3>
+                    <p class="text-gray-300">Java-based application server hosting core AlexandrIA services and APIs.</p>
+                </div>
+                <div class="nft-card p-6 rounded-xl alexandria-shadow text-center">
+                    <i class="fas fa-link text-4xl text-alexandria-bronze mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3 text-alexandria-bronze">Bare-Metal Proxies</h3>
+                    <p class="text-gray-300">High-performance chain proxies ensuring reliable blockchain connectivity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="relative z-40 py-20 px-6 md:px-12 bg-dark-800">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center phoenix-glow text-alexandria-gold">
+                <span class="treasure-border px-4 py-2 rounded-lg">Connect with AlexandrIA</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-alexandria-emerald">Join the Mission</h3>
+                    <p class="text-gray-300 mb-8">
+                        Help us preserve humanity's treasures for future generations. Connect with our team to learn more about 
+                        contributing to the AlexandrIA Anima Mundi protocol.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="text-alexandria-gold text-2xl mr-4 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-alexandria-sage">Email</h4>
+                                <a href="mailto:contact@alexandria.animamundi" class="text-gray-300 hover:text-alexandria-gold transition duration-300">contact@alexandria.animamundi</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-alexandria-emerald text-2xl mr-4 mt-1">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-alexandria-sage">Repository</h4>
+                                <a href="https://github.com/alexandria/anima-mundi" target="_blank" class="text-gray-300 hover:text-alexandria-gold transition duration-300">github.com/alexandria/anima-mundi</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-alexandria-bronze text-2xl mr-4 mt-1">
+                                <i class="fas fa-cube"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-alexandria-sage">Blockchain</h4>
+                                <span class="text-gray-300">Polkadot Parachain Network</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nft-card p-8 rounded-xl alexandria-shadow">
+                    <h3 class="text-2xl font-bold mb-6 text-alexandria-sage">Send a Message</h3>
+                    <form id="contact-form">
+                        <div class="mb-6">
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-300">Your Name</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg bg-dark-900 border border-alexandria-bronze text-white focus:border-alexandria-gold focus:outline-none transition duration-300">
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-300">Your Email</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-dark-900 border border-alexandria-bronze text-white focus:border-alexandria-gold focus:outline-none transition duration-300">
+                        </div>
+                        <div class="mb-6">
+                            <label for="subject" class="block mb-2 text-sm font-medium text-gray-300">Subject</label>
+                            <select id="subject" name="subject" required class="w-full px-4 py-3 rounded-lg bg-dark-900 border border-alexandria-bronze text-white focus:border-alexandria-gold focus:outline-none transition duration-300">
+                                <option value="">Select a topic</option>
+                                <option value="treasure-submission">Treasure Submission</option>
+                                <option value="partnership">Partnership Inquiry</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="investment">Investment Opportunity</option>
+                                <option value="general">General Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block mb-2 text-sm font-medium text-gray-300">Your Message</label>
+                            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-dark-900 border border-alexandria-bronze text-white focus:border-alexandria-gold focus:outline-none transition duration-300"></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-3 rounded-lg bg-alexandria-gold text-dark-900 font-bold hover:bg-alexandria-bronze transition duration-300 transform hover:scale-105">
+                            Send Message to AlexandrIA <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative z-40 py-12 px-6 md:px-12 text-center border-t border-alexandria-bronze">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-center space-x-6 mb-8">
+                <i class="fas fa-phoenix-framework text-alexandria-gold text-3xl"></i>
+                <i class="fab fa-ethereum text-alexandria-sage text-3xl"></i>
+                <i class="fas fa-cube text-alexandria-emerald text-3xl"></i>
+                <i class="fas fa-infinity text-alexandria-bronze text-3xl"></i>
+            </div>
+            <p class="text-gray-400 mb-4">
+                &copy; 2024 AlexandrIA Anima Mundi. Preserving humanity's treasures for eternity.
+            </p>
+            <p class="text-gray-500 text-sm">
+                Powered by Polkadot • Secured by Blockchain • Preserved Forever
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Create Anima Mundi particles
+        function createAnimaParticles() {
+            const particlesContainer = document.getElementById('anima-particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('anima-particle');
+
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+
+                // Random size
+                const size = Math.random() * 8 + 4;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                // Random animation delay
+                particle.style.animationDelay = `${Math.random() * 6}s`;
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Handle contact form submission
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                subject: formData.get('subject'),
+                message: formData.get('message'),
+                timestamp: new Date().toISOString(),
+                project: 'AlexandrIA Anima Mundi'
+            };
+
+            try {
+                // Send to AlexandrIA mail service
+                const response = await fetch('/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('Message sent successfully! We will get back to you soon.');
+                    this.reset();
+                } else {
+                    throw new Error('Failed to send message');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('There was an error sending your message. Please try again or contact us directly at contact@alexandria.animamundi');
+            }
+        });
+
+        // Initialize everything when the page loads
+        window.addEventListener('load', () => {
+            createAnimaParticles();
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
